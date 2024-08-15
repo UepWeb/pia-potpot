@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Heart with Animation and Music</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, red, pink);
+        }
+
+        .container {
+            position: relative;
+        }
+
+        .heart {
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            position: relative;
+            transform: rotate(-45deg);
+            transition: width 0.3s ease, height 0.3s ease;
+            cursor: pointer;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            transition: width 0.3s ease, height 0.3s ease;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            top: 0;
+            left: 15px;
+        }
+
+        .heart:hover {
+            width: 100px;
+            height: 100px;
+        }
+
+        .heart:hover::before {
+            width: 100px;
+            height: 100px;
+            top: -50px;
+            left: 0;
+        }
+
+        .heart:hover::after {
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 50px;
+        }
+
+        .lines {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            background-color: red;
+            transition: width 0.5s ease, height 0.5s ease;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+
+        .lines.horizontal {
+            width: 0;
+            height: 2px;
+        }
+
+        .lines.vertical {
+            width: 2px;
+            height: 0;
+        }
+
+        .box {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%) scaleY(0);
+            transform-origin: top;
+            background-color: white;
+            border: 2px solid red;
+            padding: 20px;
+            width: 400px;
+            height: 500px;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            opacity: 0;
+            pointer-events: none;
+            box-sizing: border-box;
+            word-wrap: break-word;
+            font-family: 'Arial', sans-serif;
+            white-space: pre-wrap; /* Preserve spacing and line breaks */
+            overflow-y: auto; /* Allow scrolling if needed */
+        }
+
+        .box.show {
+            transform: translate(-50%, -50%) scaleY(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .lines.show.horizontal {
+            width: 400px;
+        }
+
+        .lines.show.vertical {
+            height: 500px;
+        }
+
+        /* Music player box styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: white;
+            border: 2px solid red;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .music-player:hover {
+            transform: scale(1.1);
+        }
+
+        .music-player button {
+            background-color: transparent;
+            border: none;
+            font-size: 20px;
+            color: red;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="heart" onclick="showText()"></div>
+        <div class="lines horizontal"></div>
+        <div class="lines vertical"></div>
+        <div class="box" id="box" style="font-family: Times New Roman, Times, serif;">
+Dear Potpot,   
+
+            First of all Im very thankful na nakilala kita, sana kumain kana ey bars.. charot haahahaahah.I'll just keep it casual. I know sinend ko nato sayo noon pero, yes uulitin ko ulet. I want to take things slow, Im still learning things about you, things that makes you smile, things that makes you mad, things that you love, things that you hate. Well.. sometimes napapaisip ako pano mag rereact tuwing sinasabi mo na kung ano tayo "masaya". TvT Sorry.. Im not an attractive person ung mga nakikita mong pic may mga pilter un nyahahhahah... Im not that confident with myself either. TvT nubayan love letter to e bat ang negative. Okaaaaaay Pia pustiso kaba?.........baket?... kase I cant smile without U <3 .... hehe.. Sabi ko ayoko na mainlove sa online ee pero wla e.. kaw na yan e.. before I end this letter sana kumain kana hehe.. charot I have many things to say pero yes.. ill save it for the next letter hehe mwaa Ganda MO PALAGI .. Love Kita Always.
+
+
+Nagmamahal,
+Kape
+        </div>
+    </div>
+
+    <!-- Music Player -->
+    <div class="music-player" onclick="toggleMusic()">
+        <button id="play-btn">Myusik pra kunyari romantic... charot ▶️</button>
+    </div>
+
+    <!-- Audio Element -->
+    <audio id="myAudio">
+        <source src="buko.m4a" type="audio/mp4">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function showText() {
+            const box = document.getElementById('box');
+            const lines = document.querySelectorAll('.lines');
+            lines.forEach(line => line.classList.add('show'));
+            box.classList.add('show');
+        }
+
+        const audio = document.getElementById("myAudio");
+        const playBtn = document.getElementById("play-btn");
+
+        function toggleMusic() {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = "⏸️"; // Change to pause icon
+            } else {
+                audio.pause();
+                playBtn.textContent = "▶️"; // Change to play icon
+            }
+        }
+    </script>
+</body>
+</html>
